@@ -22,8 +22,9 @@ for project in projects.json()['components']:
         print(project['name'] + ',', end='')
     else:
         print(project['name'], end='')
-    for index in range(0, len(metrics)):
-        if index == len(metrics) -1:
+    metrics_length = len(metrics)
+    for index in range(0, metrics_length):
+        if index == metrics_length -1:
             print(metrics[index]['metric'] + ':' + metrics[index]['value'], end='')
         else:
             print(metrics[index]['metric'] + ':' + metrics[index]['value'] + ',', end='')
