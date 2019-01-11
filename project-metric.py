@@ -11,10 +11,12 @@ else:
     sys.exit('Syntax error. ' + usage)
 if url.endswith('/'):
     url = url[:-1]
-payload = {'ps': 500}
-projects = requests.get(url + '/api/projects/search', params=payload, auth=(user_token, password))
+projects = requests.get(url + '/api/projects/search', params={'ps': 500}, auth=(user_token, password))
 for project in projects.json()['components']:
-    payload = {'component': project['key'], 'metricKeys': 'bugs,code_smells,coverage,duplicated_lines_density,vulnerabilities,ncloc,sqale_index,security_remediation_effort,reliability_remediation_effort'}
+    payload = {
+        'component': project['key'],
+        'metricKeys': 'bugs,code_smells,coverage,duplicated_lines_density,vulnerabilities,ncloc,sqale_index,security_remediation_effort,reliability_remediation_effort'
+    }
     metrics = requests.get(url + '/api/measures/component', params=payload).json()['component']['measures']
     if len(metrics) > 0:
         print(project['name'] + ',', end='')
